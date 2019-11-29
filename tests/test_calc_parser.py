@@ -447,3 +447,18 @@ def test_parse_line_supports_assigment():
             'value': 5
         }
     }
+
+
+def test_parse_line_supports_expression_with_var():
+    p = cpar.CalcParser()
+    
+    p.lexer.load("x + y")
+
+    node = p.parse_line()
+
+    assert node.asdict() == {
+        "type": "binary",
+        "left": {"type": "variable", "value": "x"},
+        "right": {"type": "variable", "value": "y"},
+        "operator": {"type": "literal", "value": "+"},
+    }
