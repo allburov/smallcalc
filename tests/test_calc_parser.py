@@ -385,6 +385,19 @@ def test_parse_assignment_with_expression():
         }
     }
 
+    
+def test_parse_assignment_supports_assigment_to_variable():
+    p = cpar.CalcParser()
+    p.lexer.load("x = y")
+
+    node = p.parse_assignment()
+
+    assert node.asdict() == {
+        "type": "assignment",
+        "variable": "x",
+        "value": {"type": "variable", "value": "y"},
+    }
+
 
 def test_parse_line_supports_expression():
     p = cpar.CalcParser()
